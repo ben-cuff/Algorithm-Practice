@@ -13,8 +13,34 @@ void linear_Search(int *arr, int valueToFind);
 void binary_Search(int *arr, int valueToFind);
 void ternary_Search(int *arr, int valueToFind);
 void jump_Search(int *arr, int valueToFind);
+void runAllSearchAlgorithms();
 
 int main()
+{
+    cout << "This is my algorithm tester" << endl;
+    string input = "";
+    do
+    {
+        cout << "type 1 to run all of the search algorithms" << endl;
+        cout << "type 2 to see data concerning a comprehensive test of the search algorithms" << endl;
+
+        cin >> input;
+
+        if (input == "1")
+        {
+            runAllSearchAlgorithms();
+        }
+        else if (input == "2")
+        {
+            
+        }
+
+    } while (input != "1" && input != "2");
+
+    return 0;
+}
+
+void runAllSearchAlgorithms()
 {
     srand(static_cast<unsigned>(time(nullptr)));
 
@@ -66,8 +92,6 @@ int main()
     end = chrono::high_resolution_clock::now();
 
     cout << "Jump Search took " << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " nanoseconds to run" << endl;
-
-    return 0;
 }
 
 void linear_Search(int *arr, int valueToFind)
@@ -161,4 +185,3 @@ void jump_Search(int *arr, int valueToFind)
 
     cout << "not found" << endl;
 }
-
