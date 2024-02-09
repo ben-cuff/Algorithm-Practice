@@ -9,14 +9,18 @@ using namespace std;
 
 const int arraySize = 100000;
 
+const int searchTests = 1000000;
+
 void linear_Search(int *arr, int valueToFind);
 void binary_Search(int *arr, int valueToFind);
 void ternary_Search(int *arr, int valueToFind);
 void jump_Search(int *arr, int valueToFind);
 void runAllSearchAlgorithms();
+void testingRuntime();
 
 int main()
 {
+    srand(static_cast<unsigned>(time(nullptr)));
     cout << "This is my algorithm tester" << endl;
     string input = "";
     do
@@ -32,7 +36,7 @@ int main()
         }
         else if (input == "2")
         {
-            
+            testingRuntime();
         }
 
     } while (input != "1" && input != "2");
@@ -40,10 +44,76 @@ int main()
     return 0;
 }
 
+void testingRuntime()
+{
+    int arr[arraySize];
+
+    for (int i = 0; i < arraySize; ++i)
+    {
+        arr[i] = rand() % 1000000 + 1; // Generate a random number between 1 and 1000000
+    }
+
+    int indexToFind;
+
+    auto start = chrono::high_resolution_clock::now();
+
+    for (int i = 0; i < searchTests; i++)
+    {
+        indexToFind = rand() % arraySize;
+        linear_Search(arr, arr[indexToFind]);
+    }
+
+    auto end = chrono::high_resolution_clock::now();
+
+    cout << "10000 linear searches took an average of " << chrono::duration_cast<chrono::nanoseconds>(end - start).count() / searchTests << " nanoseconds to run" << endl;
+
+    int copyArr[arraySize];
+    for (int i = 0; i < arraySize; ++i)
+    {
+        copyArr[i] = arr[i];
+    }
+
+    sort(copyArr, copyArr + arraySize);
+
+    start = chrono::high_resolution_clock::now();
+
+    for (int i = 0; i < searchTests; i++)
+    {
+        indexToFind = rand() % arraySize;
+        binary_Search(copyArr, arr[indexToFind]);
+    }
+
+    end = chrono::high_resolution_clock::now();
+
+    cout << "10000 binary searches took an average of " << chrono::duration_cast<chrono::nanoseconds>(end - start).count() / searchTests << " nanoseconds to run" << endl;
+
+    start = chrono::high_resolution_clock::now();
+
+    for (int i = 0; i < searchTests; i++)
+    {
+        indexToFind = rand() % arraySize;
+        ternary_Search(copyArr, arr[indexToFind]);
+    }
+
+    end = chrono::high_resolution_clock::now();
+
+    cout << "10000 ternary searches took an average of " << chrono::duration_cast<chrono::nanoseconds>(end - start).count() / searchTests << " nanoseconds to run" << endl;
+
+    start = chrono::high_resolution_clock::now();
+
+    for (int i = 0; i < searchTests; i++)
+    {
+        indexToFind = rand() % arraySize;
+        jump_Search(copyArr, arr[indexToFind]);
+    }
+
+    end = chrono::high_resolution_clock::now();
+
+    cout << "10000 jump searches took an average of " << chrono::duration_cast<chrono::nanoseconds>(end - start).count() / searchTests << " nanoseconds to run" << endl;
+}
+
 void runAllSearchAlgorithms()
 {
-    srand(static_cast<unsigned>(time(nullptr)));
-
     int arr[arraySize];
 
     for (int i = 0; i < arraySize; ++i)
@@ -100,7 +170,6 @@ void linear_Search(int *arr, int valueToFind)
     {
         if (valueToFind == arr[i])
         {
-            cout << "Linear Search: Found " << valueToFind << " at index " << i << endl;
             return;
         }
     }
@@ -114,7 +183,6 @@ void binary_Search(int *arr, int valueToFind)
         int m = l + (r - l) / 2;
         if (arr[m] == valueToFind)
         {
-            cout << "Binary Search: Found " << valueToFind << " at index " << m << endl;
             return;
         }
         if (arr[m] < valueToFind)
@@ -135,13 +203,11 @@ void ternary_Search(int *arr, int valueToFind)
 
         if (arr[mid1] == valueToFind)
         {
-            cout << "Ternary Search: Found " << valueToFind << " at index " << mid1 << endl;
             return;
         }
 
         if (arr[mid2] == valueToFind)
         {
-            cout << "Ternary Search: Found " << valueToFind << " at index " << mid2 << endl;
             return;
         }
 
@@ -178,7 +244,6 @@ void jump_Search(int *arr, int valueToFind)
     {
         if (arr[i] == valueToFind)
         {
-            cout << "Jump Search: Found " << valueToFind << " at index " << i << endl;
             return;
         }
     }
