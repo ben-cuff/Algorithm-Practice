@@ -30,6 +30,8 @@ int main()
 
     cout << "Linear Search took " << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " nanoseconds to run" << endl;
 
+    start = chrono::high_resolution_clock::now();
+
     return 0;
 }
 
@@ -42,5 +44,20 @@ void linear_Search(int *arr, int valueToFind)
             cout << "Linear Search: Found " << valueToFind << " at index " << i << endl;
             return;
         }
+    }
+}
+
+void binarySearch(int arr[], int valueToFind)
+{
+    int l = 0, r = arraySize;
+    while (l <= r)
+    {
+        int m = l + (r - l) / 2;
+        if (arr[m] == x)
+            return;
+        if (arr[m] < x)
+            l = m + 1;
+        else
+            r = m - 1;
     }
 }
