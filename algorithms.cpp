@@ -20,30 +20,53 @@ void testingRuntime();
 
 int main()
 {
-    srand(static_cast<unsigned>(time(nullptr)));
+
+    srand(static_cast<unsigned>(time(nullptr))); // used for randomization
+
     cout << "This is my algorithm tester" << endl;
     string input = "";
-    do
+    bool run = true;
+
+    while (run)
     {
-        cout << "type 1 to run all of the search algorithms" << endl;
-        cout << "type 2 to see data concerning a comprehensive test of the search algorithms" << endl;
 
-        cin >> input;
-
-        if (input == "1")
+        // does input validation
+        do
         {
-            runAllSearchAlgorithms();
-        }
-        else if (input == "2")
-        {
-            testingRuntime();
-        }
+            cout << "type 1 to run all of the search algorithms" << endl;
+            cout << "type 2 to see data concerning a comprehensive test of the search algorithms" << endl;
+            cout << "type 3 to end the program" << endl;
 
-    } while (input != "1" && input != "2");
+            cin >> input;
 
+            if (input == "1")
+            {
+                runAllSearchAlgorithms(); // runs all of the search algorithms once
+            }
+            else if (input == "2")
+            {
+                testingRuntime(); // runs all of the search algorithms many times
+            }
+            else if (input == "3")
+            {
+                run = false;
+            }
+
+        } while (input != "1" && input != "2" && input != "3");
+    }
     return 0;
 }
 
+/**
+ * This function is intended to run a test of each of the algorithms in order to determine an average runtime.
+ * It creates a random array and then searches it using each of the algorithms a number of times
+ * Once it is done running, it prints the average runtime of the algorithm
+ *
+ * @pre None
+ *
+ * @post Prints to the console the average runtime of each algorithm after running a number of times
+ *
+ */
 void testingRuntime()
 {
     int arr[arraySize];
@@ -112,6 +135,16 @@ void testingRuntime()
     cout << "10000 jump searches took an average of " << chrono::duration_cast<chrono::nanoseconds>(end - start).count() / searchTests << " nanoseconds to run" << endl;
 }
 
+/**
+ * This function is intended to test each of the algorithms once and then display the runtime.
+ * It searches an array of a given size
+ * These algorithms include a linear search, tinary search, ternary search and jump search.
+ *
+ * @pre none
+ *
+ * @post The runtime performance of each search algorithm is displayed on the console.
+ *
+ */
 void runAllSearchAlgorithms()
 {
     int arr[arraySize];
@@ -164,6 +197,17 @@ void runAllSearchAlgorithms()
     cout << "Jump Search took " << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " nanoseconds to run" << endl;
 }
 
+/**
+ * This function is intended to be an implementation of a linear search
+ *
+ * @param arr is a pointer to the first value in the array that is being searched
+ * @param valueToFind is the value being searched for in the array
+ *
+ * @pre arr cannot be a nullptr and must be an array of ints.
+ *
+ * @post the function ends when the value has been found
+ *
+ */
 void linear_Search(int *arr, int valueToFind)
 {
     for (int i = 0; i < arraySize; i++)
@@ -175,6 +219,17 @@ void linear_Search(int *arr, int valueToFind)
     }
 }
 
+/**
+ * This function is intended to be an implementation of a binary search
+ *
+ * @param arr is a pointer to the first value in the array that is being searched
+ * @param valueToFind is the value being searched for in the array
+ *
+ * @pre arr cannot be a null pointer and must be a sorted array of ints
+ *
+ * @post the function ends when the value has been found
+ *
+ */
 void binary_Search(int *arr, int valueToFind)
 {
     int l = 0, r = arraySize - 1;
@@ -193,6 +248,17 @@ void binary_Search(int *arr, int valueToFind)
     cout << "not found" << endl;
 }
 
+/**
+ * This function is intended to be an implementation of a ternary
+ *
+ * @param arr is a pointer to the first value in the array that is being searched
+ * @param valueToFind is the value being searched for in the array
+ *
+ * @pre arr cannot be a null pointer and must be a sorted array of ints
+ *
+ * @post the function ends when the value has been found
+ *
+ */
 void ternary_Search(int *arr, int valueToFind)
 {
     int l = 0, r = arraySize - 1;
@@ -224,6 +290,17 @@ void ternary_Search(int *arr, int valueToFind)
     cout << "not found" << endl;
 }
 
+/**
+ * This function is intended to be an implementation of a jump search
+ *
+ * @param arr is a pointer to the first value in the array that is being searched
+ * @param valueToFind is the value being searched for in the array
+ *
+ * @pre arr cannot be a null pointer and must be a sorted array of ints
+ *
+ * @post the function ends when the value has been found
+ *
+ */
 void jump_Search(int *arr, int valueToFind)
 {
     int step = sqrt(arraySize);
